@@ -7,9 +7,9 @@ use helix_core::hashmap;
 pub fn default() -> HashMap<Mode, KeyTrie> {
     let normal = keymap!({ "Normal mode"
         "h" | "left" => move_char_left,
-        "j" | "down" => move_visual_line_down,
-        "k" | "up" => move_visual_line_up,
-        "l" | "right" => move_char_right,
+        "n" | "down" => move_line_down,
+        "e" | "up" => move_line_up,
+        "i" | "right" => move_char_right,
 
         "t" => find_till_char,
         "f" => find_next_char,
@@ -28,11 +28,11 @@ pub fn default() -> HashMap<Mode, KeyTrie> {
 
         "w" => move_next_word_start,
         "b" => move_prev_word_start,
-        "e" => move_next_word_end,
+        "j" => move_next_word_end,
 
         "W" => move_next_long_word_start,
         "B" => move_prev_long_word_start,
-        "E" => move_next_long_word_end,
+        "J" => move_next_long_word_end,
 
         "v" => select_mode,
         "G" => goto_line,
@@ -62,7 +62,7 @@ pub fn default() -> HashMap<Mode, KeyTrie> {
         },
         ":" => command_mode,
 
-        "i" => insert_mode,
+        "l" => insert_mode,
         "I" => insert_at_line_start,
         "a" => append_mode,
         "A" => insert_at_line_end,
@@ -138,8 +138,8 @@ pub fn default() -> HashMap<Mode, KeyTrie> {
 
         "/" => search,
         "?" => rsearch,
-        "n" => search_next,
-        "N" => search_prev,
+        "k" => search_next,
+        "K" => search_prev,
         "*" => search_selection_detect_word_boundaries,
         "A-*" => search_selection,
 
@@ -160,9 +160,9 @@ pub fn default() -> HashMap<Mode, KeyTrie> {
         ">" => indent,
         "<" => unindent,
         "=" => format_selections,
-        "J" => join_selections,
+        "C-J" => join_selections,
         "A-J" => join_selections_space,
-        "K" => keep_selections,
+        "C-K" => keep_selections,
         "A-K" => remove_selections,
 
         "," => keep_primary_selection,
@@ -295,8 +295,8 @@ pub fn default() -> HashMap<Mode, KeyTrie> {
             "t" => align_view_top,
             "b" => align_view_bottom,
             "m" => align_view_middle,
-            "k" | "up" => scroll_up,
-            "j" | "down" => scroll_down,
+            "e" | "up" => scroll_up,
+            "n" | "down" => scroll_down,
             "C-b" | "pageup" => page_up,
             "C-f" | "pagedown" => page_down,
             "C-u" | "backspace" => page_cursor_half_up,
@@ -304,16 +304,16 @@ pub fn default() -> HashMap<Mode, KeyTrie> {
 
             "/" => search,
             "?" => rsearch,
-            "n" => search_next,
-            "N" => search_prev,
+            "k" => search_next,
+            "K" => search_prev,
         },
         "Z" => { "View" sticky=true
             "z" | "c" => align_view_center,
             "t" => align_view_top,
             "b" => align_view_bottom,
             "m" => align_view_middle,
-            "k" | "up" => scroll_up,
-            "j" | "down" => scroll_down,
+            "e" | "up" => scroll_up,
+            "n" | "down" => scroll_down,
             "C-b" | "pageup" => page_up,
             "C-f" | "pagedown" => page_down,
             "C-u" | "backspace" => page_cursor_half_up,
@@ -321,8 +321,8 @@ pub fn default() -> HashMap<Mode, KeyTrie> {
 
             "/" => search,
             "?" => rsearch,
-            "n" => search_next,
-            "N" => search_prev,
+            "k" => search_next,
+            "K" => search_prev,
         },
 
         "\"" => select_register,
@@ -339,22 +339,22 @@ pub fn default() -> HashMap<Mode, KeyTrie> {
     let mut select = normal.clone();
     select.merge_nodes(keymap!({ "Select mode"
         "h" | "left" => extend_char_left,
-        "j" | "down" => extend_visual_line_down,
-        "k" | "up" => extend_visual_line_up,
-        "l" | "right" => extend_char_right,
+        "n" | "down" => extend_line_down,
+        "e" | "up" => extend_line_up,
+        "i" | "right" => extend_char_right,
 
         "w" => extend_next_word_start,
         "b" => extend_prev_word_start,
-        "e" => extend_next_word_end,
+        "j" => extend_next_word_end,
         "W" => extend_next_long_word_start,
         "B" => extend_prev_long_word_start,
-        "E" => extend_next_long_word_end,
+        "J" => extend_next_long_word_end,
 
         "A-e" => extend_parent_node_end,
         "A-b" => extend_parent_node_start,
 
-        "n" => extend_search_next,
-        "N" => extend_search_prev,
+        "k" => extend_search_next,
+        "K" => extend_search_prev,
 
         "t" => extend_till_char,
         "f" => extend_next_char,
